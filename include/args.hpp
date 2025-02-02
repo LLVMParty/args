@@ -89,7 +89,7 @@ class ArgumentParser
     ArgumentParser(ArgumentParser&&)                 = delete;
     ArgumentParser& operator=(ArgumentParser&&)      = delete;
 
-    void parseOrExit(int argc, char** argv, const char* helpflag = "-help")
+    void parseOrExit(int argc, const char* const* argv, const char* helpflag = "-help")
     {
         bool help = false;
         addBool(helpflag, help, "Show this message");
@@ -110,7 +110,7 @@ class ArgumentParser
         }
     }
 
-    void parse(int argc, char** argv)
+    void parse(int argc, const char* const* argv)
     {
         this->argc        = argc;
         this->argv        = argv;
@@ -293,7 +293,7 @@ class ArgumentParser
 
     int                             i          = 1;
     int                             argc       = 0;
-    char**                          argv       = nullptr;
+    const char* const*              argv       = nullptr;
     bool                            didExtract = false;
     std::string                     arg;
     std::unordered_set<std::string> flagsExtracted;

@@ -8,7 +8,7 @@ struct Arguments : public ArgumentParser
     std::string output;
     bool        parallel = false;
 
-    Arguments(int argc, char** argv) : ArgumentParser("Example")
+    Arguments(int argc, const char* const* argv) : ArgumentParser("Example")
     {
         addPositional("input", input, "Input file", true);
         addString("-output", output, "Output file");
