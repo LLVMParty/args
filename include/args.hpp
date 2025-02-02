@@ -78,6 +78,15 @@ class ArgumentParser
         flagArgs.push_back(Arg{flagname, help, required, fn});
     }
 
+    void addExtra(std::vector<std::string>& args)
+    {
+        if (extra != nullptr)
+        {
+            throw std::runtime_error("cannot add extra arguments multiple times");
+        }
+        extra = &args;
+    }
+
     explicit ArgumentParser(std::string description) : description(std::move(description))
     {
     }
@@ -152,6 +161,16 @@ class ArgumentParser
             {
                 continue;
             }
+
+            if (arg == "--" && extra != nullptr)
+            {
+                for (int j = i + 1; j < argc; j++)
+                {
+                    extra->push_back(argv[j]);
+                }
+                break;
+            }
+
             if (arg[0] == '-')
             {
                 didExtract = false;
@@ -231,6 +250,10 @@ class ArgumentParser
                 help += ']';
             }
         }
+        if (extra != nullptr)
+        {
+            help += " -- [extra arguments]";
+        }
         help += '\n';
 
         if (!description.empty())
@@ -287,9 +310,10 @@ class ArgumentParser
         }
     };
 
-    std::string      description;
-    std::vector<Arg> positionalArgs;
-    std::vector<Arg> flagArgs;
+    std::string               description;
+    std::vector<Arg>          positionalArgs;
+    std::vector<Arg>          flagArgs;
+    std::vector<std::string>* extra = nullptr;
 
     int                             i          = 1;
     int                             argc       = 0;
