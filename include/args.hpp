@@ -203,7 +203,7 @@ class ArgumentParser
         }
     }
 
-    [[nodiscard]] std::string helpStr() const
+    std::string helpStr() const
     {
         std::string help;
         help += "  ";
