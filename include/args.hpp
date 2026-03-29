@@ -123,23 +123,23 @@ class ArgumentParser
     {
         this->argc        = argc;
         this->argv        = argv;
-        bool seenRequired = false;
+        bool seenOptional = false;
         for (const auto& positionalArg : positionalArgs)
         {
             if (positionalArg.name.empty())
             {
                 throw std::runtime_error("cannot add positional argument without name");
             }
-            if (!positionalArg.required)
+            if (positionalArg.required)
             {
-                if (seenRequired)
+                if (seenOptional)
                 {
                     throw std::runtime_error("cannot add required positional argument after an optional one");
                 }
             }
             else
             {
-                seenRequired = true;
+                seenOptional = true;
             }
         }
         for (const auto& flagArg : flagArgs)
