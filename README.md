@@ -12,7 +12,7 @@ FetchContent_Declare(args
     GIT_REPOSITORY
         "https://github.com/LLVMParty/args"
     GIT_TAG
-        v1.2
+        v1.3
 )
 FetchContent_MakeAvailable(args)
 ```
